@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
+	 
 private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
@@ -30,7 +30,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 		
 		model.addAttribute("serverTime", formattedDate );
 		  
-		return "include/home";
+		return "home";
 	}
 	   
 	@RequestMapping(value = "/da", method = RequestMethod.GET)

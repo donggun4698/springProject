@@ -6,13 +6,13 @@
 <tiles-definitions>
 	<definition name="standardLayout" template="/WEB-INF/views/standardLayout.jsp">
 		<put-attribute name="header"/>
-		<put-attribute name="body"/>
-		<put-attribute name="footer"/>
+		<put-attribute name="body" />
+		<put-attribute name="footer"  />
 	</definition>
 	
-	<definition name="/home" extends="standardLayout">
+	<definition name="*" extends="standardLayout">
 		<put-attribute name="header" value="/WEB-INF/views/main/header.jsp"/>
-		<put-attribute name="body"/>
+		<put-attribute name="body" value="/WEB-INF/views/main/home.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/main/footer.jsp" />
 	</definition>
 	
