@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <body>
 <div id="header-wrapper">
 			<div id="header">
-				<a href="home"><img src="/resources/logo.png" alt="logo"
+				<a href="main"><img src="${pageContext.request.contextPath}/resources/logo.png" alt="logo"
 					class="logo"></a>
 				<!--상단내비   -->
 				<nav id="nav">
