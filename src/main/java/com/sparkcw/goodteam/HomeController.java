@@ -29,7 +29,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		  
+		   
 		return "main";
 	} 
 	   
