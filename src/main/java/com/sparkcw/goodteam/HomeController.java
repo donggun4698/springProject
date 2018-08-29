@@ -33,7 +33,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 		return "main";
 	} 
 	   
-	@RequestMapping(value = "/da", method = RequestMethod.GET)
+	@RequestMapping(value = "/club/intro", method = RequestMethod.GET)
 	public String home1(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		

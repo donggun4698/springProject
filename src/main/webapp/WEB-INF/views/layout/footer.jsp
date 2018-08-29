@@ -7,7 +7,7 @@
 </head>
 <body>
 <!--footer   -->
-		<div id="footer-wrapper">
+		<div id="footer_wrapper">
 			<div id="footer">
 				<img src="${pageContext.request.contextPath}/resources/logo3.png" alt="logo" class="logo2">
 				<div class="copyright">

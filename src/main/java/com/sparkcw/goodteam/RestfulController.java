@@ -25,7 +25,7 @@ public class RestfulController {
 	 */ 
 	       
 	
-	@RequestMapping(value = "/club/intro", method = RequestMethod.GET)
+	@RequestMapping(value = "/club/intro",consumes="application/json" ,method = RequestMethod.GET)
 	public UserDto home1(Locale locale, Model model) {
 		logger.info("이동");
 		UserDto us = new UserDto("ad","p1212w","role.s");

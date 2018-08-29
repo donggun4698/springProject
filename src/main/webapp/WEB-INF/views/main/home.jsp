@@ -6,8 +6,8 @@
 </head>
 <body>
 
-<div id="container-wrapper">
-			<div class="contents-wrpper">
+<div id="container_wrapper">
+			<div class="contents_wrpper">
 				<div id="banner">
 				<P>  The time on the server is ${serverTime}. </P>
 				</div>
