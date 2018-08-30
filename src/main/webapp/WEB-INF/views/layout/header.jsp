@@ -6,18 +6,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#test1").bind("click",function(){
+$(document).ready(function() {
+	$("#test1").click(function(){
 		 $.ajax({  
 			 url: "/club/intro",
 			dataType: "json",
-			type:"GET"
+			type:"GET",
+ 			success : function(a){
+				alert("성공");
+ 	 			},
+ 	 			error : function(result){
+ 		    	   alert("Upload Failed - Or Access Denied");
+ 		       	}
 		});
 	});
-});
-</script>
 
+});
+
+
+</script>
 <body>
 	<div id="header_wrapper">
 		<div id="header">
@@ -32,7 +41,7 @@ $(document).ready(function(){
 				</li>
 				<li class="gnb2">
 					<p class="gnb2_text">
-						<a href="home" id="test1">경기정보</a>
+						<a href="#" id="test1">경기정보</a>
 					</p>
 				</li>
 				<li class="gnb3">

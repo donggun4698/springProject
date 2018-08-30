@@ -14,6 +14,6 @@
 	</definition>
 	
 	<definition name="club/intro" extends="standardLayout">
-		<put-attribute name="body" value="/WEB-INF/views/main/home.jsp"/>
+		
 	</definition>
 </tiles-definitions>

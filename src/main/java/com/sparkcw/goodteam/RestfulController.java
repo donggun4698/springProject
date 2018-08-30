@@ -25,11 +25,11 @@ public class RestfulController {
 	 */ 
 	       
 	
-	@RequestMapping(value = "/club/intro",consumes="application/json" ,method = RequestMethod.GET)
+	@RequestMapping(value = "/club/intro", produces="application/json" ,method = RequestMethod.GET)
 	public UserDto home1(Locale locale, Model model) {
-		logger.info("이동");
+		logger.info("Welcome home! The client locale is {}.", locale);
 		UserDto us = new UserDto("ad","p1212w","role.s");
-	
+		
 		return us;
 	}
 	
