@@ -1,4 +1,4 @@
-package com.sparkcw.goodteam;
+package com.sparkcw.goodteam.controller;
 
 import java.util.Locale;
 
@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sparkcw.goodteam.UserDto;
 
 
 

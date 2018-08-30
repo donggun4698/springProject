@@ -1,4 +1,4 @@
-package com.sparkcw.goodteam;
+package com.sparkcw.goodteam.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
