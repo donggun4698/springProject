@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sparkcw.goodteam.UserDto;
+import com.sparkcw.goodteam.dto.Member;
 
 
 
@@ -28,9 +28,9 @@ public class RestfulController {
 	       
 	
 	@RequestMapping(value = "/club/intro", produces="application/json" ,method = RequestMethod.GET)
-	public UserDto home1(Locale locale, Model model) {
+	public Member home1(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		UserDto us = new UserDto("ad","p1212w","role.s");
+		Member us = new Member("aa11","11","홍길동");
 		
 		return us;
 	}

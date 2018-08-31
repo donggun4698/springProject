@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -12,5 +14,16 @@
 		<property name="password" value="spark" />
 	</bean>
 
+	<!-- 	MyBatis  -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:com/sparkcw/goodteam/dao/mapper/*.xml"></property>
+	</bean>
 
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        	<constructor-arg  ref="sqlSessionFactory" />
+    </bean>
+   
+    <mybatis-spring:scan base-package="com.sparkcw.goodteam.dao"/>
+    
 </beans>
