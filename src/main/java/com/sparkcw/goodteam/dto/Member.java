@@ -1,15 +1,18 @@
 package com.sparkcw.goodteam.dto;
 
+import java.sql.Date;
+
 public class Member {
-	private String code;
+	private int code;
 	private String id;
 	private String pw;
 	private String name;
 	private String nickname;
 	private String phone;
 	private String email;
-	private String birthday;
+	private Date birthday;
 	private String sex;
+	
 	
 	public Member(String id, String pw, String name) {
 		super();
@@ -18,8 +21,8 @@ public class Member {
 		this.name = name;
 	}
 	
-	public Member(String code, String id, String pw, String name, String nickname, String phone, String email,
-			String birthday, String sex) {
+	public Member(int code, String id, String pw, String name, String nickname, String phone, String email,
+			Date birthday, String sex) {
 		super();
 		this.code = code;
 		this.id = id;
@@ -31,11 +34,11 @@ public class Member {
 		this.birthday = birthday;
 		this.sex = sex;
 	}
-
-	public String getCode() {
+	
+	public int getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 	public String getId() {
@@ -74,10 +77,10 @@ public class Member {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 	public String getSex() {
@@ -86,6 +89,5 @@ public class Member {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
 	
 }

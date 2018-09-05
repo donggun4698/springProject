@@ -21,13 +21,41 @@
 <!-- 		SELECT authority FROM user where id=#{id}  -->
 <!-- 	</select> -->
 	
+	<resultMap type="Member" id="AllMember">
+		<result property="code" column="MEMBER_CODE" />
+		<result property="id" column="MEMBER_ID" />
+		<result property="pw" column="MEMBER_PW" />
+		<result property="name" column="MEMBER_NAME" />
+		<result property="nickname" column="MEMBER_NICKNAME" />
+		<result property="phone" column="MEMBER_PHONE" />
+		<result property="email" column="MEMBER_EMAIL" />
+		<result property="birthday" column="MEMBER_BIRTHDAY" />
+		<result property="sex" column="MEMBER_SEX" />
+	</resultMap>
+	
 	<insert id="insertMember" >
 		insert into member_tb(MEMBER_CODE, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_BIRHTDAY, MEMBER_SEX) 
 		values(#{code}, #{id}, #{pw}, #{name}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex})
 	</insert>
 	
-	<delete id="deleteAllMember">
+	<delete id="deleteAllMember" >
 		delete from member_tb;
 	</delete>
+	
+	<delete id="deleteMember" >
+		delete from member_tb where MEMBER_ID = #{id};
+	</delete>
+	
+	<update id="updateMember">
+		update member_tb set MEMBER_PW = #{pw},  MEMBER_NICKNAME = #{nickname}, MEMBER_PHONE = #{phone}, MEMBER_EMAIL = #{email} where MEMBER_CODE = #{code};	
+	</update>
+	
+	<select id="selectMember" resultType="Member" >
+		select * from member_tb where MEMBER_ID = #{ID};
+	</select>
+	
+	<select id="selectAllMember" resultMap="AllMember">
+		select * from member_tb;
+	</select>
 </mapper>
     
