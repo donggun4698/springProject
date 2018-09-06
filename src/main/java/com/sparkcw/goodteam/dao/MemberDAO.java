@@ -20,7 +20,7 @@ public interface MemberDAO {
 	/*
 	 * 특정멤버를 삭제합니다.
 	 */
-	public void deleteMember(String memberId);
+	public void deleteMember(int memberCode);
 	
 	/*
 	 * 특정멤버의 정보를 수정합니다.
@@ -30,7 +30,7 @@ public interface MemberDAO {
 	/*
 	 * 특정멤버를 조회합니다.
 	 */
-	public Member selectMember(String memberId);
+	public List<Member> selectMember(Member member);
 	
 	/*
 	 * 전체멤버를 조회합니다.

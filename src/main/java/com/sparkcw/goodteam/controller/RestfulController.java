@@ -1,5 +1,6 @@
 package com.sparkcw.goodteam.controller;
 
+import java.sql.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -26,12 +27,11 @@ public class RestfulController {
 	 * Simply selects the home view to render by returning its name.
 	 */ 
 	       
-	
+
 	@RequestMapping(value = "/club/intro", produces="application/json" ,method = RequestMethod.GET)
 	public Member home1(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		Member us = new Member("aa11","11","홍길동");
-		
+		Member us = new Member(213, "aa11", "11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", Date.valueOf("2020-08-12"), "M");
 		return us;
 	}
 	

@@ -2,26 +2,26 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-    <mapper namespace="com.sparkcw.goodteam.dao.MemberDAO">
-	
-<!-- 	<insert id="add"  > -->
-<!-- 		INSERT INTO USER(ID, NAME, PASSWORD,EMAIL,LEVEL) VALUES (#{id},#{name},#{password},#{email},#{level}) -->
-<!-- 	</insert> -->
-	
-<!-- 	<select id="getUser" resultType="com.myproject.sells.dto.User"> -->
-<!-- 		SELECT * FROM user where id=#{id} and password=#{password} -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="get" resultType="com.myproject.sells.dto.User"> -->
-<!-- 		SELECT * FROM user where id=#{id}  -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getAuth" > -->
-<!-- 		SELECT authority FROM user where id=#{id}  -->
-<!-- 	</select> -->
-	
-	<resultMap type="Member" id="AllMember">
+
+<mapper namespace="com.sparkcw.goodteam.dao.MemberDAO">
+
+	<!-- <insert id="add" > -->
+	<!-- INSERT INTO USER(ID, NAME, PASSWORD,EMAIL,LEVEL) VALUES (#{id},#{name},#{password},#{email},#{level}) -->
+	<!-- </insert> -->
+
+	<!-- <select id="getUser" resultType="com.myproject.sells.dto.User"> -->
+	<!-- SELECT * FROM user where id=#{id} and password=#{password} -->
+	<!-- </select> -->
+
+	<!-- <select id="get" resultType="com.myproject.sells.dto.User"> -->
+	<!-- SELECT * FROM user where id=#{id} -->
+	<!-- </select> -->
+
+	<!-- <select id="getAuth" > -->
+	<!-- SELECT authority FROM user where id=#{id} -->
+	<!-- </select> -->
+
+	<resultMap type="Member" id="Member">
 		<result property="code" column="MEMBER_CODE" />
 		<result property="id" column="MEMBER_ID" />
 		<result property="pw" column="MEMBER_PW" />
@@ -32,30 +32,43 @@
 		<result property="birthday" column="MEMBER_BIRTHDAY" />
 		<result property="sex" column="MEMBER_SEX" />
 	</resultMap>
-	
-	<insert id="insertMember" >
-		insert into member_tb(MEMBER_CODE, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_BIRHTDAY, MEMBER_SEX) 
-		values(#{code}, #{id}, #{pw}, #{name}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex})
+
+	<insert id="insertMember" parameterType="Member">
+		insert into
+		member_tb(MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME,
+		MEMBER_PHONE, MEMBER_EMAIL, MEMBER_BIRHTDAY, MEMBER_SEX)
+		values(#{id}, #{pw}, #{name}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex})
 	</insert>
-	
-	<delete id="deleteAllMember" >
-		delete from member_tb;
+
+	<delete id="deleteAllMember">
+		delete from member_tb
 	</delete>
-	
-	<delete id="deleteMember" >
-		delete from member_tb where MEMBER_ID = #{id};
+
+	<delete id="deleteMember">
+		delete from member_tb where
+		MEMBER_CODE = #{CODE}
 	</delete>
-	
+
 	<update id="updateMember">
-		update member_tb set MEMBER_PW = #{pw},  MEMBER_NICKNAME = #{nickname}, MEMBER_PHONE = #{phone}, MEMBER_EMAIL = #{email} where MEMBER_CODE = #{code};	
+		update member_tb set MEMBER_PW = #{pw},
+		MEMBER_NICKNAME = #{nickname}, MEMBER_PHONE = #{phone}, MEMBER_EMAIL =
+		#{email} where MEMBER_CODE = #{code}
 	</update>
-	
-	<select id="selectMember" resultType="Member" >
-		select * from member_tb where MEMBER_ID = #{ID};
+
+	<select id="selectMember" resultType="Member" resultMap="Member">
+		select * from member_tb
+		<where>
+			<if test='id != null and id != ""'>
+				MEMBER_ID LIKE CONCAT('%' , #{id} , '%')
+			</if>
+			<if test='nickname != null and nickname != ""'>
+				AND MEMBER_NICKNAME LIKE CONCAT('%' , #{nickname} , '%')
+			</if>
+		</where>
 	</select>
-	
-	<select id="selectAllMember" resultMap="AllMember">
-		select * from member_tb;
+
+	<select id="selectAllMember" resultMap="Member">
+		select * from member_tb
 	</select>
 </mapper>
     

@@ -13,12 +13,8 @@ public class Member {
 	private Date birthday;
 	private String sex;
 	
-	
-	public Member(String id, String pw, String name) {
+	public Member() {
 		super();
-		this.id = id;
-		this.pw = pw;
-		this.name = name;
 	}
 	
 	public Member(int code, String id, String pw, String name, String nickname, String phone, String email,
