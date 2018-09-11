@@ -36,4 +36,14 @@ public interface MemberDAO {
 	 * 전체멤버를 조회합니다.
 	 */
 	public List<Member> selectAllMember();
+	
+	/*
+	 * 입력받은 ID가 DB에 존재하는지 조회합니다.
+	 */
+	public String selectMemberId(String id);
+	
+	/*
+	 * 입력받은 닉네임이 DB에 존재하는지 조회합니다.
+	 */
+	public String selectMemberNickname(String nickname);
 }

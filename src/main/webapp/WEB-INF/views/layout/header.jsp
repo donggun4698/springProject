@@ -15,6 +15,7 @@ $(document).ready(function() {
 			dataType: "json",
 			type:"GET",
  			success : function(a){
+ 	 			console.log(a.id);
 				alert("성공");
  	 			},
  	 			error : function(result){
@@ -29,14 +30,14 @@ $(document).ready(function() {
 </script>
 <body>
 	<div id="header_wrapper">
-		<div id="header">
-			<a href="main"><img
+		<div id="header"> 
+			<a href="/main"><img
 				src="${pageContext.request.contextPath}/resources/logo.png"
 				alt="logo" class="logo"></a>
 			<ul class="nav1">
 				<li class="gnb1">
 					<p class="gnb1_text">
-						<a href="club/intro">소개</a>
+						<a href="/club/intro">소개</a>
 					</p>
 				</li>
 				<li class="gnb2">
@@ -68,8 +69,8 @@ $(document).ready(function() {
 			<!-- 					로그인 -->
 			<div class="login_wrapper">
 				<div class="login_before">
-					<a href="member/login" class="login_before_text">로그인</a>
-					<a href="member/join" class="login_before_text">회원가입</a>
+					<a href="/member/login" class="login_before_text">로그인</a>
+					<a href="/member/join" class="login_before_text">회원가입</a>
 				</div>
 			</div>
 		</div>

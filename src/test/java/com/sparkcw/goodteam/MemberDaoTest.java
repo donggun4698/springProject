@@ -22,7 +22,7 @@ import com.sparkcw.goodteam.dao.MemberDAO;
 import com.sparkcw.goodteam.dto.Member;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/*.xml" })
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/*.xml" })
 @Transactional
 public class MemberDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger("MemberDAO TEST");
@@ -35,15 +35,15 @@ public class MemberDaoTest {
 	
 	@Before
 	public void setUp() {
-		mem1 = new Member(213, "aa11", "11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", Date.valueOf("2020-08-12"), "M");
+		mem1 = new Member(213, "33", "33", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", Date.valueOf("2020-08-12"), "M");
 		mem2 = new Member(12, "bb22", "22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", Date.valueOf("2020-06-05"), "M");
 	}
  
 	@Test
 	public void testdeleteMember() {
-		memberDAO.deleteAllMember();
+	
 		memberDAO.insertMember(mem1);
-		memberDAO.insertMember(mem2);
+	
 	}
 	
 	@Test
@@ -56,16 +56,23 @@ public class MemberDaoTest {
 	@Test
 	public void selectMember() {
 		Member selectMem = new Member();
-		selectMem.setId("aa11");
+		selectMem.setId("bb22");
 		List<Member> newmem = memberDAO.selectMember(selectMem);
 		logger.info(newmem.get(0).getId());
 //		assertThat(mem1.getName(), is(newmem.getName()));	
 	}
 	
 	@Test
-	public void selectAllMember() {
-		List<Member> members = memberDAO.selectAllMember();
-		logger.info(members.toString());
+	public void selectMemberId() {
+		String members = memberDAO.selectMemberId("bb22");
+		logger.info(members);
+		
+	}
+	
+	@Test
+	public void selectMemberNickname() {
+		String members = memberDAO.selectMemberNickname("순신닉1");
+		logger.info("nickName:"+members);
 		
 	}
 	

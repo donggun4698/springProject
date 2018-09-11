@@ -12,8 +12,10 @@
 	<definition name="main" extends="standardLayout">
 		<put-attribute name="body" value="/WEB-INF/views/main/home.jsp"/>
 	</definition>
-	
-	<definition name="club/intro" extends="standardLayout">
-		
+
+	<definition name="join" extends="standardLayout">
+		<put-attribute name="body" value="/WEB-INF/views/member/join.jsp"/>
 	</definition>
+	
+
 </tiles-definitions>

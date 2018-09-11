@@ -31,4 +31,14 @@ public interface MemberService {
 	 * 특정멤버의 정보를 수정합니다.
 	 */
 	public Map<String, Object> updateMember(Member member);
+	
+	/*
+	 * 입력받은 ID중복여부를 검사합니다.
+	 */
+	public Map<String, Object> registerMemberIdDuplicateCheck(String id);
+		
+	/*
+	 * 입력받은 닉네임의 중복여부를 검사합니다.
+	 */
+	public Map<String, Object> registerMemberNicknameDuplicateCheck(String id);
 }

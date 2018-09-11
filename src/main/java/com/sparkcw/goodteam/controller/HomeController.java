@@ -22,8 +22,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	@RequestMapping(value = {"/main", "/home"}, method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-	
-		   
+
 		return "main";
 	} 
 	   
@@ -39,5 +38,13 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 		model.addAttribute("serverTime", formattedDate );
 		 
 		return "include/home";
+	}
+	
+	/*
+	 * 회원가입 페이지로 이동합니다.
+	 */
+	@RequestMapping(value="/member/join", method = RequestMethod.GET)
+	public String join() {
+		return "join";
 	}
 }

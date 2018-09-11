@@ -70,5 +70,13 @@
 	<select id="selectAllMember" resultMap="Member">
 		select * from member_tb
 	</select>
+	
+	<select id="selectMemberId" resultType="String">
+		select MEMBER_ID from member_tb where MEMBER_ID = #{id}
+	</select>
+	
+	<select id="selectMemberNickname"  resultType="String">
+		select MEMBER_NICKNAME from member_tb where MEMBER_NICKNAME = #{nickname}
+	</select>
 </mapper>
     
