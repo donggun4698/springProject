@@ -41,4 +41,9 @@ public interface MemberService {
 	 * 입력받은 닉네임의 중복여부를 검사합니다.
 	 */
 	public Map<String, Object> registerMemberNicknameDuplicateCheck(String id);
+	
+	/*
+	 * 입력받은 값이 비밀번호로 사용가능한지 검사합니다.
+	 */
+	public Map<String, Object> registerMemberPwCheck(String pw);
 }

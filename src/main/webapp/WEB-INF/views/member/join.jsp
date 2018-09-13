@@ -29,12 +29,12 @@ $(document).ready(function(){
 	};
 
 	$("#submitBt").click(function(){
-		if($("#id_Check").val()=="N"){
+		if($("#idFlag").val()=="N"){
 				alert("올바른 아이디가 입력되지않았습니다.");
 				return;
 			}
 
-		if($("#nickname_Check").val()=="N"){
+		if($("#nicknameFlag").val()=="N"){
 			alert("올바른 닉네임이 입력되지않았습니다.");
 			return;
 		}
@@ -57,16 +57,43 @@ $(document).ready(function(){
  	 	 			}
 				
  	 			},
- 	 			error : function(result){
+ 	 			error : function(){
  		    	   alert("등록에 실패했습니다.");
  		       	}
 			});
 	});
 
+	function showError(location , message){
+		location.text(message);
+		location.css("color","red");
+		location.css("font-size","14px");
+	}
+
+	function showSuccess(location , message){
+		location.text(message);
+		location.css("color","green");
+		location.css("font-size","14px");
+	}
+	
  function idCheck(){
+		var msgLocation = $("#idCheckStatus");
+		var id = $("#id").val();
+
+		if(id ==""){
+			showError(msgLocation , "아이디가 입력되지 않았습니다.");
+			return false;
+			}
+
+		var chkPattern = /^[a-z0-9]{5,20}$/;
+		if(!chkPattern.test(id)){
+			showError(msgLocation, "사용자 ID는 5~20자 사이의 영문 소문자, 숫자만 사용가능합니다.");
+			return false;
+			}
+
 		var formData = new Object();
-		formData.id = $("#id").val();
+		formData.id = id;
 		var data = JSON.stringify(formData);
+		
 		$.ajax({
 			url: "/check/member/id",
 			dataType: "json",
@@ -75,30 +102,43 @@ $(document).ready(function(){
 			data: data,
  			success : function(json){
  	 			if(json.result =="success"){
- 	 				$("#id_Check").val("Y");
- 	 				$("#idCheckStatus").text(json.message);
- 	 				$("#idCheckStatus").css("color","blue");
+ 	 				$("#idFlag").val("Y");
+ 	 				showSuccess(msgLocation,json.message);
  	 	 			}
  	 			else{
- 	 				$("#id_Check").val("N")
- 	 				$("#idCheckStatus").text(json.message);
- 	 				$("#idCheckStatus").css("color","red");
- 	 	 			}
+ 	 				showError(msgLocation,json.message);
+ 	 	 			} 
 				
  	 			},
- 	 			error : function(result){
+ 	 			error : function(){
  		    	   alert("중복 검사에 실패했습니다.");
  		       	}
 			});
  	}
  
 	$("#id").change(function(){
+		$("#idFlag").val("N");
 		idCheck();
 	});      
 
 	function nicknameCheck(){
+
+		var msgLocation = $("#nicknameCheckStatus");
+		var nickname = $("#nickname").val();
+
+		if(nickname ==""){
+			showError(msgLocation , "닉네임이 입력되지 않았습니다.");
+			return false;
+			}
+
+		var chkPattern = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/;
+		if(!chkPattern.test(nickname)){
+			showError(msgLocation , "닉네임은 2~10자 사이의 한글, 숫자, 영문 대 소문자만 사용가능합니다. (공백,특수기호 사용불가)");
+			return false;
+			}
+
 		var formData = new Object();
-		formData.nickname = $("#nickname").val();
+		formData.nickname = nickname;
 		var data = JSON.stringify(formData);
 		$.ajax({
 			url: "/check/member/nickname",
@@ -108,26 +148,97 @@ $(document).ready(function(){
 			data: data,
  			success : function(json){
  	 			if(json.result =="success"){
- 	 				$("#nickname_Check").val("Y");
- 	 				$("#nicknameCheckStatus").text(json.message);
- 	 				$("#nicknameCheckStatus").css("color","blue");
+ 	 				$("#nicknameFlag").val("Y");
+ 	 				showSuccess(msgLocation,json.message);
  	 	 			}
  	 			else{
- 	 				$("#nickname_Check").val("N")
- 	 				$("#nicknameCheckStatus").text(json.message);
- 	 				$("#nicknameCheckStatus").css("color","red");
+ 	 				showError(msgLocation,json.message);
  	 	 			}
 				         
  	 			},
- 	 			error : function(result){
+ 	 			error : function(){
  		    	   alert("중복 검사에 실패했습니다.");
  		       	}
 			});
 		} 
 
 	$("#nickname").change(function(){
+		$("#nicknameFlag").val("N");
 		nicknameCheck();
 	});
+
+	function pwCheck(){
+
+		var msgLocation = $("#pwCheckStatus");
+		var pw = $("#pw").val();
+
+		if(pw ==""){
+			showError(msgLocation , "비밀번호가 입력되지 않았습니다.");
+			return false;
+			}
+
+		var chkPattern =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+		if(!chkPattern.test(pw)){
+			showError(msgLocation , "8~16자 영문 대 소문자, 숫자, 특수문자만 사용가능합니다.");
+			return false;
+			}
+
+		var formData = new Object();
+		formData.pw = pw;
+		var data = JSON.stringify(formData);
+		$.ajax({
+			url: "/check/member/pw",
+			dataType: "json",
+			contentType :"application/json;charset=UTF-8",
+			type:"post",
+			data: data,
+ 			success : function(json){
+ 	 			if(json.result =="success"){
+ 	 				$("#pwFlag").val("Y");
+ 	 				showSuccess(msgLocation,json.message);
+ 	 	 			}
+ 	 			else{
+ 	 				showError(msgLocation,json.message);
+ 	 	 			}
+				         
+ 	 			},
+ 	 			error : function(){
+ 		    	   alert("다시 시도해주세요");
+ 		       	}
+			});
+		} 
+
+	$("#pw").change(function(){
+		$("#pwFlag").val("N");
+		$("#pwRecheckFlag").val("N");
+		pwCheck();
+	});
+	
+	function pwRecheck(){
+		var msgLocation = $("#pwRecheckStatus");
+		var pw = $("#pw").val();
+		var pw2 = $("#pw2").val();
+			
+		if(pw2 == ""){
+			showError(msgLocation , "비밀번호 재확인이 필요합니다.");
+			$("#pwRecheckFlag").val("N");
+			return false;
+			}
+
+		if(!(pw ==pw2)){
+				pw2 = $("#pw2").val("");
+				showError(msgLocation , "비밀번호가 일치하지 않습니다.");
+				$("#pwRecheckFlag").val("N");
+				return false;
+			}
+			showSuccess(msgLocation , "");
+			$("#pwRecheckFlag").val("Y");
+		}
+
+	$("#pw2").change(function(){
+		pwRecheck();
+	});
+	
 	
 });
 </script>
@@ -137,15 +248,21 @@ $(document).ready(function(){
 			<tr>
 				<th><label for="id">아이디</label></th>
 				<td><input type="text" name="id" id="id"  maxlength="20">
-					<p>사용자 ID는 3~20자 사이의 영문+숫자로 이루어져야 하며 영문으로 시작되어야 합니다.</p>
 					<p id="idCheckStatus"></p>
-					<input type="hidden" id="id_Check"  value="N"> </td>
+					<input type="hidden" id="idFlag"  value="N"> </td>
 			</tr>
 			<tr>
 				<th><label for="pw">비밀번호</label></th>
-				<td><input type="password" name="pw" id="pw" class="textBox">
-				<p>8~15영문숫자조합</p></td>
-
+				<td><input type="password" name="pw" id="pw" maxlength="16">
+				<p id="pwCheckStatus"></p>
+				<input type="hidden" id="pwFlag"  value="N"></td>
+				
+			</tr>
+			<tr>
+				<th><label for="pw2">비밀번호 재확인</label></th>
+				<td><input type="password" name="pw2" id="pw2" maxlength="16" >
+				<p id="pwRecheckStatus"></p>
+					<input type="hidden" id="pwRecheckFlag"  value="N"></td></td>
 			</tr>
 			<tr>
 				<th><label for="name">이름</label></th>
@@ -153,9 +270,9 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<th><label for="nickname">닉네임</label></th>
-				<td><input type="text" name="nickname" id="nickname" >
+				<td><input type="text" name="nickname" id="nickname" maxlength="10" >
 				<p id="nicknameCheckStatus"></p>
-					<input type="hidden" id="nickname_Check"  value="N"> </td>
+					<input type="hidden" id="nicknameFlag"  value="N"> </td>
 			</tr>
 			<tr>
 				<th><label for="phone">휴대폰번호</label></th>

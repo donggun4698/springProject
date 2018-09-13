@@ -62,4 +62,9 @@ public class RestfulController {
 		return memberService.registerMemberIdDuplicateCheck(member.getId());
 	}
 	
+	@RequestMapping(value = "/check/member/pw", produces="application/json" , method = RequestMethod.POST)
+	public Map<String, Object> registerMemberPwCheck(@RequestBody Member member) {
+		logger.info(member.getPw());
+		return memberService.registerMemberPwCheck(member.getPw());
+	}
 }
