@@ -67,4 +67,10 @@ public class RestfulController {
 		logger.info(member.getPw());
 		return memberService.registerMemberPwCheck(member.getPw());
 	}
+	
+	@RequestMapping(value = "/check/member/bir", produces="application/json" , method = RequestMethod.POST)
+	public Map<String, Object> registerMemberBirCheck(@RequestBody Member member, @ModelAttribute("birthday") String birthcheck) {
+		logger.info("register bir ="+birthcheck);
+		return memberService.registerMemberBirthdayCheck(birthcheck);
+	}
 }

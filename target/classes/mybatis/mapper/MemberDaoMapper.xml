@@ -29,14 +29,14 @@
 		<result property="nickname" column="MEMBER_NICKNAME" />
 		<result property="phone" column="MEMBER_PHONE" />
 		<result property="email" column="MEMBER_EMAIL" />
-		<result property="birthday" column="MEMBER_BIRTHDAY" />
+		<result property="birthday" column="MEMBER_BIRTHDAY"  />
 		<result property="sex" column="MEMBER_SEX" />
 	</resultMap>
 
 	<insert id="insertMember" parameterType="Member">
 		insert into
 		member_tb(MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME,
-		MEMBER_PHONE, MEMBER_EMAIL, MEMBER_BIRHTDAY, MEMBER_SEX)
+		MEMBER_PHONE, MEMBER_EMAIL, MEMBER_BIRTHDAY, MEMBER_SEX)
 		values(#{id}, #{pw}, #{name}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex})
 	</insert>
 

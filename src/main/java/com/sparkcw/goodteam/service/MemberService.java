@@ -1,6 +1,6 @@
 package com.sparkcw.goodteam.service;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 import com.sparkcw.goodteam.dto.Member;
@@ -40,10 +40,21 @@ public interface MemberService {
 	/*
 	 * 입력받은 닉네임의 중복여부를 검사합니다.
 	 */
-	public Map<String, Object> registerMemberNicknameDuplicateCheck(String id);
+	public Map<String, Object> registerMemberNicknameDuplicateCheck(String nickname);
 	
 	/*
 	 * 입력받은 값이 비밀번호로 사용가능한지 검사합니다.
 	 */
 	public Map<String, Object> registerMemberPwCheck(String pw);
+	
+	/*
+	 * 입력받은 값이 이름으로 적절한지 검사합니다.
+	 */
+	public Map<String, Object> registerMemberNameCheck(String name);
+	
+	/*
+	 * 입력받은 생년월일이 적절한지 검사합니다.
+	 */
+	public Map<String, Object> registerMemberBirthdayCheck(String birthday);
+	
 }

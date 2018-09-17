@@ -1,6 +1,8 @@
 package com.sparkcw.goodteam.dto;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Member {
 	private int code;
@@ -12,6 +14,7 @@ public class Member {
 	private String email;
 	private Date birthday;
 	private String sex;
+	
 	
 	public Member() {
 		super();

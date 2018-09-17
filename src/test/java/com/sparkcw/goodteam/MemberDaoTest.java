@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.junit.Before;
@@ -30,23 +31,37 @@ public class MemberDaoTest {
 	MemberDAO memberDAO;
 	Member mem1;
 	Member mem2;
+	Member mem3;
 	
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Before
 	public void setUp() {
-		mem1 = new Member(213, "33", "33", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", Date.valueOf("2020-08-12"), "M");
-		mem2 = new Member(12, "bb22", "22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", Date.valueOf("2020-06-05"), "M");
+		try {
+
+			mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", sdf.parse("2020-08-12"), "M");
+			mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", sdf.parse("2020-06-05"), "M");
+			mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", sdf.parse("2020-09-06"), "F");
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
- 
-	@Test
+
+	public void insertMember() {
+		
+		memberDAO.insertMember(mem1);
+		memberDAO.insertMember(mem2);
+		memberDAO.insertMember(mem3);
+	}
+	
 	public void testdeleteMember() {
 	
 		memberDAO.insertMember(mem1);
 	
 	}
 	
-	@Test
+	
 	public void updateMember() {
 		mem1.setNickname("길똥닉");
 		memberDAO.updateMember(mem1);
@@ -58,25 +73,25 @@ public class MemberDaoTest {
 		Member selectMem = new Member();
 		selectMem.setId("bb22");
 		List<Member> newmem = memberDAO.selectMember(selectMem);
-		logger.info(newmem.get(0).getId());
+		logger.info(String.valueOf(newmem.get(0).getBirthday()));
 //		assertThat(mem1.getName(), is(newmem.getName()));	
 	}
 	
-	@Test
+	
 	public void selectMemberId() {
 		String members = memberDAO.selectMemberId("bb22");
 		logger.info(members);
 		
 	}
 	
-	@Test
+
 	public void selectMemberNickname() {
 		String members = memberDAO.selectMemberNickname("순신닉1");
 		logger.info("nickName:"+members);
 		
 	}
 	
-	@Test
+	
 	public void deleteMember() {
 		List<Member> members = memberDAO.selectAllMember();
 		memberDAO.deleteMember(members.get(0).getCode());

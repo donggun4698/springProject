@@ -7,4 +7,6 @@
   		<!-- 계정정보 -->
   		<typeAlias type="com.sparkcw.goodteam.dto.Member" alias="Member"/>
   	</typeAliases>
+  	
+  	
   </configuration>

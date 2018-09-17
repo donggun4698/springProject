@@ -3,7 +3,11 @@ package com.sparkcw.goodteam;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -34,13 +38,32 @@ public class MemberServiceTest {
 	Member mem1;
 	Member mem2;
 	Member mem3;
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	
 	@Before
 	public void setUp() {
-		mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", Date.valueOf("2020-08-12"), "M");
-		mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", Date.valueOf("2020-06-05"), "M");
-		mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", Date.valueOf("2020-09-06"), "F");
+	try {
+
+		mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", sdf.parse("2020-08-40"), "M");
+		mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", sdf.parse("2020-06-05"), "M");
+		mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", sdf.parse("2020-09-06"), "F");
+	
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
- 
+	
+	}
+	
+//	@Test
+//	@Rollback(false)
+	public void insertMember() {
+		
+		memberService.registerMember(mem1);
+		memberService.registerMember(mem2);
+		memberService.registerMember(mem3);
+	}
 
 	
 	public void getMemberTest() {
@@ -50,15 +73,14 @@ public class MemberServiceTest {
 		Map<String, Object> returnValue =  memberService.getMember(testMem);
 		if(returnValue.get("result").equals("success")) {
 			List<Member> newmem =  (List<Member>)returnValue.get("data");
-			logger.info(String.valueOf(newmem.size()));
+			logger.info(String.valueOf(newmem.get(1).getBirthday()));
 		}
 	}
 	
 	
 	public void registerMemberTest() {
-		Member testMem = new Member(213, "cc33", "33", "유관순", "관순닉", "111-1111-3333", "ccc@na.com", Date.valueOf("2020-03-12"), "F");
-		Map<String, Object> returnValue =  memberService.registerMember(testMem);
-		printMember(); 
+		
+	
 	}
 	
 	
@@ -87,7 +109,7 @@ public class MemberServiceTest {
 		}
 	}
 	
-	@Test
+	
 	public void idCheck() {
 		//특수문자 체크
 		String str1 = "dsa1133333";
@@ -107,6 +129,26 @@ public class MemberServiceTest {
 		logger.info("idcheck:  " + chk1 +" / "+ chk2);
 	}
 	
+	@Test
+	public void birthdayMember() {
+		
+			sdf.setLenient(false);
+			
+			LocalDate localtime= LocalDate.parse("2000-02-30");
+			System.out.println(localtime);
+			Member member1 = new Member();
+//			member1.setBirthday(date1);
+//			member1.setName("왕건");
+			System.out.println(member1.getBirthday());
+//			Map<String, Object> birthday1 = memberService.registerMemberBirthdayCheck("1997-02-29");
+//			if(birthday1.get("result") != "success") {
+//				System.out.println(birthday1.get("message"));	
+//			} else System.out.println(birthday1.get("result"));
+			
+			
+		
+				
+	}
 	
 	public void printMember() {
 		Map<String, Object> members =  memberService.getMember(null);
