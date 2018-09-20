@@ -35,15 +35,41 @@ $(document).ready(function(){
 
 	$("#submitBt").click(function(){
 		if($("#idFlag").val()=="N"){
-				alert("올바른 아이디가 입력되지않았습니다.");
+				alert("아이디를 확인해주세요.");
 				return;
 			}
-
+		if($("#pwFlag").val()=="N"){
+			alert("비밀번호를 확인해주세요.");
+			return;
+		}
+		if($("#pwRecheckFlag").val()=="N"){
+			alert("비밀번호 재확인이 확실하지않습니다..");
+			return;
+		}
+		if($("#nameFlag").val()=="N"){
+			alert("이름을 확인해주세요.");
+			return;
+		}
 		if($("#nicknameFlag").val()=="N"){
 			alert("올바른 닉네임이 입력되지않았습니다.");
 			return;
 		}
-		
+		if($("#phoneFlag").val()=="N"){
+			alert("휴대폰번호 확인이 필요합니다.");
+			return;
+		}
+		if($("#emailFlag").val()=="N"){
+			alert("이메일주소 확인이 필요합니다.");
+			return;
+		}
+		if($("#birthdayFlag").val()=="N"){
+			alert("생년월일의 확인이 필요합니다.");
+			return;
+		}
+		if(!$("input:radio[name='sex']").is(":checked")){
+			alert("성별체크의 확인이 필요합니다.");
+			return;
+		}
 		var formData = $("#join-form").serializeObject();
 		var data = JSON.stringify(formData);
 		$.ajax({
@@ -52,13 +78,13 @@ $(document).ready(function(){
 			contentType :"application/json;charset=UTF-8",
 			type:"post",
 			data: data,
- 			success : function(json){
- 	 			if(json.result =="success"){
-				console.log(formData);
+ 			success : function(data){
+ 	 			if(data.result =="success"){
  	 				alert("가입성공");
+ 	 				location.replace("/main");
  	 	 			}
  	 			else{
- 	 				alert(json.message);
+ 	 				alert(data.message);
  	 	 			}
 				
  	 			},
@@ -105,18 +131,18 @@ $(document).ready(function(){
 			contentType :"application/json;charset=UTF-8",
 			type:"post",
 			data: data,
- 			success : function(json){
- 	 			if(json.result =="success"){
+ 			success : function(data){
+ 	 			if(data.result =="success"){
  	 				$("#idFlag").val("Y");
- 	 				showSuccess(msgLocation,json.message);
+ 	 				showSuccess(msgLocation,data.message);
  	 	 			}
  	 			else{
- 	 				showError(msgLocation,json.message);
+ 	 				showError(msgLocation,data.message);
  	 	 			} 
 				
  	 			},
  	 			error : function(){
- 		    	   alert("중복 검사에 실패했습니다.");
+  		    	   alert("중복 검사에 실패했습니다.");
  		       	}
 			});
  	}
@@ -127,7 +153,6 @@ $(document).ready(function(){
 	});      
 
 	function nicknameCheck(){
-
 		var msgLocation = $("#nicknameCheckStatus");
 		var nickname = $("#nickname").val();
 
@@ -151,15 +176,14 @@ $(document).ready(function(){
 			contentType :"application/json;charset=UTF-8",
 			type:"post",
 			data: data,
- 			success : function(json){
- 	 			if(json.result =="success"){
+ 			success : function(data){
+ 	 			if(data.result =="success"){
  	 				$("#nicknameFlag").val("Y");
- 	 				showSuccess(msgLocation,json.message);
+ 	 				showSuccess(msgLocation,data.message);
  	 	 			}
  	 			else{
- 	 				showError(msgLocation,json.message);
- 	 	 			}
-				         
+ 	 				showError(msgLocation,data.message);
+ 	 	 			}   
  	 			},
  	 			error : function(){
  		    	   alert("중복 검사에 실패했습니다.");
@@ -173,7 +197,6 @@ $(document).ready(function(){
 	});
 
 	function pwCheck(){
-
 		var msgLocation = $("#pwCheckStatus");
 		var pw = $("#pw").val();
 
@@ -188,29 +211,8 @@ $(document).ready(function(){
 			return false;
 			}
 
-		var formData = new Object();
-		formData.pw = pw;
-		var data = JSON.stringify(formData);
-		$.ajax({
-			url: "/check/member/pw",
-			dataType: "json",
-			contentType :"application/json;charset=UTF-8",
-			type:"post",
-			data: data,
- 			success : function(json){
- 	 			if(json.result =="success"){
- 	 				$("#pwFlag").val("Y");
- 	 				showSuccess(msgLocation,json.message);
- 	 	 			}
- 	 			else{
- 	 				showError(msgLocation,json.message);
- 	 	 			}
-				         
- 	 			},
- 	 			error : function(){
- 		    	   alert("다시 시도해주세요");
- 		       	}
-			});
+		showSuccess(msgLocation , "");
+		$("#pwFlag").val("Y");
 		} 
 
 	$("#pw").change(function(){
@@ -250,7 +252,6 @@ $(document).ready(function(){
 			
 		if(name == ""){
 			showError(msgLocation , "이름이 입력되지 않았습니다.");
-			$("#nameFlag").val("N");
 			return false;
 			}
 
@@ -265,24 +266,25 @@ $(document).ready(function(){
 		}
 
 	$("#name").change(function(){
+		$("#nameFlag").val("N");
 		nameCheck();
 	});
 
-	$("#datepicker").datepicker({
-        changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
-        changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
-        minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
-        nextText: '다음 달', // next 아이콘의 툴팁.
-        prevText: '이전 달', // prev 아이콘의 툴팁.
-        yearRange: 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
-        dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
-        showAnim: "slide", //애니메이션을 적용한다. 
-        showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
-        dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'], // 월의 한글 형식.
+	$("#birthday").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        minDate: '-100y', 
+        maxDate: '0',
+        nextText: '다음 달', 
+        prevText: '이전 달', 
+        yearRange: 'c-100:c+100', 
+        dateFormat: "yy-mm-dd", 
+        showAnim: "slide", 
+        showMonthAfterYear: true ,  
+        dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
         onClose: function(date) {
              $("#birthday").val(date);
-             birthdayCheck();
         }
    });
 	
@@ -294,36 +296,139 @@ $(document).ready(function(){
 			showError(msgLocation , "생년월일이 입력되지 않았습니다.");
 			return false;
 			}
-		
-		var formData = new Object();
-		formData.birthday = $("#birthday").val();
-		var data = JSON.stringify(formData);
-		$.ajax({
-			url: "/check/member/bir",
-			dataType: "json",
-			contentType :"application/json;charset=UTF-8",
-			type:"post",
-			data: data,
- 			success : function(json){
- 	 			if(json.result =="success"){
- 	 				
- 	 				showSuccess(msgLocation,json.message);
- 	 	 			}
- 	 			else{
- 	 				showError(msgLocation,json.message);
- 	 	 			}
-				         
- 	 			}
-			});
 
-		$("#birthday").change(function(){
-			birthdayCheck();
-		});
+		var chkPattern = /^(1|2)[0-9]{3}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;
+		if(!(chkPattern.test(birthday))){
+			showError(msgLocation , "생년월일을 다시 확인해주세요.");
+			return false;
+			}
+
+        var today = dateFormat(new Date());
+		var birthday_dateType = strToDate(birthday);
+		var today_dateType = strToDate(today);
+
+		var diff = (today_dateType.getTime() - birthday_dateType.getTime())/ (1000*60*60*24);
 	
+		if(diff < 0){
+			showError(msgLocation , "미래에서 오셨습니까?");
+			return false;
+			}
+		
+		today_dateType.setYear(today_dateType.getYear() - 100);
+		
+		var minimumBirth = (birthday_dateType.getTime() - today_dateType.getTime())/ (1000*60*60*24);
+
+		if(minimumBirth < 0){
+			showError(msgLocation , "정말입니까?");
+			return false;
+			}
+
+		if(leapYearCheck(birthday) == false){
+			showError(msgLocation , "생년월일을 다시 확인해주세요.");
+			return false;
+			}
+
+		$("#birthdayFlag").val("Y");
+		showSuccess(msgLocation , "");
 	}
+
+	$("#birthday").change(function(){
+		$("#birthdayFlag").val("N");
+		birthdayCheck();
+	});
 	
-	
-	
+	function dateFormat(date){
+	    function change(num) {
+	        num = String(num);
+	        return num.length < 2 ? '0' + num : num;
+	    }
+	    return date.getFullYear() + '-' + change(date.getMonth()+1) + '-' + change(date.getDate());
+	}
+
+	function strToDate(date){
+		 var result = date.split("-");
+	     result[1] = (Number(result[1]) - 1) + "";
+	     
+	     return new Date(result[0], result[1], result[2]);
+	   }
+
+	function leapYearCheck(date){
+	 	   var month= [0 , 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		   var birthday = date.split("-");
+		   var bir_yy = Number(birthday[0]);
+		   var bir_mm = Number(birthday[1]);
+		   var bir_dd = Number(birthday[2]);
+		   var leapYear = false;
+		   
+			if((bir_yy % 4 == 0 && bir_yy % 100 !=0) || bir_yy % 400 == 0 ){
+				leapYear = true;
+			}
+			
+			if(leapYear == false){
+				if(bir_dd > month[bir_mm]){
+					return false;
+				}
+			} else {
+				if(bir_mm == 2){
+					if(bir_dd > 29){
+						return false;
+						}
+					}
+				else if(bir_dd > month[bir_mm]){
+					return false;
+				}
+			}
+	 }
+
+	function emailCheck(){
+			var msgLocation = $("#emailCheckStatus");
+			var email = $("#email").val();
+				
+			if(email == ""){
+				showError(msgLocation , "이메일 주소가 입력되지 않았습니다.");
+				return false;
+				}
+
+			var chkPattern = /(^[\w-]+)@(([\w-]+\.)+)([a-zA-Z]{2,}$)/;
+			if(!chkPattern.test(email)){
+				showError(msgLocation , "이메일 주소를 다시 확인해주세요.");
+				return false;
+				}
+			
+				showSuccess(msgLocation , "");
+				$("#emailFlag").val("Y");
+			}
+
+		$("#email").change(function(){
+			$("#emailFlag").val("N");
+			emailCheck();
+		});
+
+		function phoneCheck(){
+			var msgLocation = $("#phoneCheckStatus");
+			var phone = $("#phone").val();
+				
+			if(phone == ""){
+				showError(msgLocation , "휴대전화번호가 입력되지 않았습니다.");
+				return false;
+				}
+
+			var chkPattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+			if(!chkPattern.test(phone)){
+				showError(msgLocation , "휴대전화번호를 다시 확인해주세요.");
+				return false;
+				}
+			
+				phone = phone.replace(/-/g,"");
+				showSuccess(msgLocation , "");
+				$("#phoneFlag").val("Y");
+				$("#phone").val(phone);
+			}
+
+		$("#phone").change(function(){
+			$("#phoneFlag").val("N");
+			phoneCheck();
+		});
 });
 </script>
 <body>
@@ -363,17 +468,23 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<th><label for="phone">휴대폰번호</label></th>
-				<td><input type="text" name="phone"></td>
+				<td><input type="text" name="phone" id="phone">
+				<p id="phoneCheckStatus"></p> <input type="hidden"
+					id="phoneFlag" value="N"></td>
 			</tr>
 			<tr>
 				<th><label for="email">이메일주소</label></th>
-				<td><input type="text" name="email"></td>
+				<td><input type="text" name="email" id="email">
+				<p id="emailCheckStatus"></p>
+				<input type="hidden" id="emailFlag" value="N"></td>
+				
 			</tr>
 			<tr>
 				<th><label for="birthday">생년월일</label></th>
-				<td><input type="text" name="birthday" id="datepicker">
+				<td><input type="text" name="birthday" id="birthday" value="">
 				<p id="birthdayCheckStatus"></p>
-				<input type="hidden" id="birthday" value=""></td>
+				<input type="hidden" id="birthdayFlag" value="N">
+				</td>
 			</tr>
 			<tr>
 				<th><label for="sex">성별</label></th>

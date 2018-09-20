@@ -1,6 +1,10 @@
 package com.sparkcw.goodteam.serviceimpl;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -235,45 +239,40 @@ public class MemberServiceImpl implements MemberService {
 		return returnValues;
 	}
 
-	public Map<String, Object> registerMemberBirthdayCheck(String birthday) {
+	public Map<String, Object> registerMemberBirthdayCheck(LocalDate birthday) {
 		Map<String, Object> returnValues = new HashMap<String, Object>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		int[] month_day = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		
+		int[] month_day = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 		try {
 			if (birthday == null) {
 				throw new ValueBlankException("birthday is blank!");
 			}
-
-			Calendar today = Calendar.getInstance();
-			Calendar memberBirth = Calendar.getInstance();
-//			memberBirth.setTime(birthday);
-			long diff = today.getTimeInMillis() - memberBirth.getTimeInMillis();
-
+			
+			LocalDate today = LocalDate.now();
+			DateTimeFormatter fomatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String str_birthday = birthday.format(fomatter);
+			
 			String chkPattern = "^(1|2)[0-9]{3}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$";
-			Boolean chkResult = Pattern.matches(chkPattern, sdf.format(birthday));
+			Boolean chkResult = Pattern.matches(chkPattern, str_birthday);
 			if (!chkResult) {
 				throw new InvalidValueException("생년월일을 다시 확인해주세요.");
 			}
-
-			if (diff < 0) {
+			
+			if(birthday.isAfter(today)) {
 				throw new InvalidValueException("미래에서 오셨습니까?");
 			}
-			
-			if(today.get(Calendar.YEAR)-memberBirth.get(Calendar.YEAR) > 100) {
-				throw new InvalidValueException("정말입니까.");
+				
+		    LocalDate minBirthday = today.minusYears(100);
+		    
+			if((birthday.isBefore(minBirthday))) {
+				throw new InvalidValueException("정말입니까?");
 			}
 			
-			int bir_yy = memberBirth.get(Calendar.YEAR);
-			int bir_mm = memberBirth.get(Calendar.MONTH);
-			int bir_dd = memberBirth.get(Calendar.DATE);
-			Boolean checkLeapyear = false;
-
-			if ((bir_yy % 400) == 0 || (bir_yy % 4 == 0 && bir_yy % 100 != 0)) {
-				checkLeapyear = true;
-			}
-			System.out.println(bir_dd);
-			if (checkLeapyear == false) {
+			int bir_mm = birthday.getMonthValue();
+			int bir_dd = birthday.getDayOfMonth();
+		
+			if (!birthday.isLeapYear()) {
 				if (bir_dd > month_day[bir_mm]) {
 					throw new InvalidValueException("생년월일을 확인해주세요.");
 				}
@@ -300,6 +299,82 @@ public class MemberServiceImpl implements MemberService {
 			returnValues.put("message", e.getMessage());
 		}
 
+		return returnValues;
+	}
+
+	@Override
+	public Map<String, Object> registerMemberEmailCheck(String email) {
+		Map<String, Object> returnValues = new HashMap<String, Object>();
+		try {
+			if (StringUtils.isBlank(email)) {
+				throw new ValueBlankException("email is blank!");
+			}
+			String chkPattern = "(^[\\w-]+)@(([\\w-]+\\.)+)([a-zA-Z]{2,}$)";
+			Boolean chkResult = Pattern.matches(chkPattern, email);
+			if (!chkResult) {
+				throw new InvalidValueException();
+			}
+			returnValues.put("result", "success");
+			returnValues.put("message", "사용 가능합니다.");
+		} catch (ValueBlankException e) {
+			returnValues.put("result", "blank");
+			returnValues.put("message", "이메일 주소가 입력되지 않았습니다.");
+		}catch (InvalidValueException e) {
+			returnValues.put("result", "invalid");
+			returnValues.put("message", "이메일 주소를 다시 확인해주세요.");
+		}
+		return returnValues;
+	}
+
+	@Override
+	public Map<String, Object> registerMemberPhoneCheck(String phone) {
+		Map<String, Object> returnValues = new HashMap<String, Object>();
+		try {
+			if (StringUtils.isBlank(phone)) {
+				throw new ValueBlankException("phone is blank!");
+			}
+			
+			String chkPattern = "^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$";
+			Boolean chkResult = Pattern.matches(chkPattern, phone);
+			if (!chkResult) {
+				throw new InvalidValueException("휴대전화번호를 다시 확인해주세요.");
+			}
+			
+			returnValues.put("result", "success");
+			returnValues.put("message", "사용 가능합니다.");
+		} catch (ValueBlankException e) {
+			returnValues.put("result", "blank");
+			returnValues.put("message", "휴대전화번호가 입력되지 않았습니다.");
+		} catch (InvalidValueException e) {
+			returnValues.put("result", "invalid");
+			returnValues.put("message", "휴대전화번호를 다시 확인해주세요.");
+		}
+		return returnValues;
+	}
+
+	@Override
+	public Map<String, Object> registerMemberSexCheck(String sex) {
+		Map<String, Object> returnValues = new HashMap<String, Object>();
+		try {
+			if (StringUtils.isBlank(sex)) {
+				throw new ValueBlankException("sex is blank!");
+			}
+			
+			String chkPattern = "^[M|F]$";
+			Boolean chkResult = Pattern.matches(chkPattern, sex);
+			if (!chkResult) {
+				throw new InvalidValueException("성별을 다시 확인해주세요.");
+			}
+			
+			returnValues.put("result", "success");
+			returnValues.put("message", "사용 가능합니다.");
+		} catch (ValueBlankException e) {
+			returnValues.put("result", "blank");
+			returnValues.put("message", "성별이 입력되지 않았습니다.");
+		} catch (InvalidValueException e) {
+			returnValues.put("result", "invalid");
+			returnValues.put("message", "성별을 다시 확인해주세요.");
+		}
 		return returnValues;
 	}
 }

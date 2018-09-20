@@ -5,9 +5,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -46,9 +48,9 @@ public class MemberServiceTest {
 	public void setUp() {
 	try {
 
-		mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", sdf.parse("2020-08-40"), "M");
-		mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", sdf.parse("2020-06-05"), "M");
-		mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", sdf.parse("2020-09-06"), "F");
+		mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", LocalDate.parse("2020-08-10"), "M");
+		mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", LocalDate.parse("2020-06-05"), "M");
+		mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", LocalDate.parse("2020-09-06"), "F");
 	
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -56,8 +58,7 @@ public class MemberServiceTest {
 	
 	}
 	
-//	@Test
-//	@Rollback(false)
+	
 	public void insertMember() {
 		
 		memberService.registerMember(mem1);
@@ -73,7 +74,7 @@ public class MemberServiceTest {
 		Map<String, Object> returnValue =  memberService.getMember(testMem);
 		if(returnValue.get("result").equals("success")) {
 			List<Member> newmem =  (List<Member>)returnValue.get("data");
-			logger.info(String.valueOf(newmem.get(1).getBirthday()));
+			logger.info(String.valueOf(newmem.get(1).getName()+" / "+newmem.get(1).getBirthday()));
 		}
 	}
 	
@@ -129,27 +130,88 @@ public class MemberServiceTest {
 		logger.info("idcheck:  " + chk1 +" / "+ chk2);
 	}
 	
-	@Test
+	
 	public void birthdayMember() {
 		
-			sdf.setLenient(false);
-			
-			LocalDate localtime= LocalDate.parse("2000-02-30");
-			System.out.println(localtime);
-			Member member1 = new Member();
-//			member1.setBirthday(date1);
-//			member1.setName("왕건");
-			System.out.println(member1.getBirthday());
-//			Map<String, Object> birthday1 = memberService.registerMemberBirthdayCheck("1997-02-29");
-//			if(birthday1.get("result") != "success") {
-//				System.out.println(birthday1.get("message"));	
-//			} else System.out.println(birthday1.get("result"));
-			
-			
+		Member member1 = new Member();
 		
+			try {
+//				LocalDate localtime= LocalDate.parse("2001-02-29");
+				member1.setBirthday(LocalDate.parse("2001-02-28"));	
+				LocalDate localtime = LocalDate.now();
+				System.out.println(localtime.getMonth());
+				Map<String, Object> birth = memberService.registerMemberBirthdayCheck(member1.getBirthday());
+				System.out.println(birth.get("result"));
+				System.out.println(birth.get("message"));
+			}catch (DateTimeParseException e) {
+				System.out.println(member1.getBirthday());
+				System.out.println(e.getMessage());
+			}
+			
+	
 				
 	}
 	
+	
+	
+	public void phoneTest() {
+		String wrongnumber = "010333334444";
+		String number = "01011112222";
+		Member member1 = new Member();
+		member1.setPhone(number);
+		Map<String, Object> result = memberService.registerMemberPhoneCheck(member1.getPhone());
+		String returnValue =(String)result.get("result");
+		System.out.println(returnValue + ": " + result.get("message"));
+	}
+	
+
+	public void emailTest() {
+		String wrongemail = "aaa@ba.c";
+		String email= "aaaa@na.cc";
+		Member member1 = new Member();
+		member1.setEmail(email);
+		Map<String, Object> result = memberService.registerMemberEmailCheck(member1.getEmail());
+		String returnValue =(String)result.get("result");
+		System.out.println(returnValue + ": " + result.get("message"));
+	}
+	
+	
+
+	public void sexTest() {
+		String man = "M";
+		String wrongsex= "f";
+		Member member1 = new Member();
+		member1.setSex(wrongsex);
+		Map<String, Object> result = new HashMap<String, Object>(); 
+		result = memberService.registerMemberSexCheck(member1.getSex());
+		String returnValue =(String)result.get("result");
+		System.out.println(result.get("result") + ": " + result.get("message"));
+		
+	}
+	
+	
+	@Test
+	public void registerTest() {
+		Member member1 = new Member();
+		Map<String, Object> result = new HashMap<String, Object>();
+		String successSex = "M";
+		String wrongSex= "f";
+		String wrongNick= "순신닉";
+		String successNick= "성공닉";
+		
+		member1.setSex(successSex);
+		member1.setNickname(wrongNick);
+		
+		result = memberService.registerMemberSexCheck(member1.getSex());
+		if(!result.containsValue("success")) {
+		System.out.println("["+result.hashCode()+"]  "+result.get("result") + ": " + result.get("message"));
+		}
+		
+		result = memberService.registerMemberNicknameDuplicateCheck(member1.getNickname());
+		if(!result.containsValue("success")) {
+			System.out.println("["+result.hashCode()+"]  "+result.get("result") + ": " + result.get("message"));
+		}
+	}
 	public void printMember() {
 		Map<String, Object> members =  memberService.getMember(null);
 		if(members.get("result").equals("success")) {

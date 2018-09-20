@@ -1,5 +1,6 @@
 package com.sparkcw.goodteam.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 
@@ -55,6 +56,20 @@ public interface MemberService {
 	/*
 	 * 입력받은 생년월일이 적절한지 검사합니다.
 	 */
-	public Map<String, Object> registerMemberBirthdayCheck(String birthday);
+	public Map<String, Object> registerMemberBirthdayCheck(LocalDate birthday);
 	
+	/*
+	 * 입력받은 이메일주소가 적절한지 검사합니다.
+	 */
+	public Map<String, Object> registerMemberEmailCheck(String email);
+	
+	/*
+	 * 입력받은 휴대전화번호가 적절한지 검사합니다.
+	 */
+	public Map<String, Object> registerMemberPhoneCheck(String phone);
+	
+	/*
+	 * 입력받은 성별의 값을 검사합니다.
+	 */
+	public Map<String, Object> registerMemberSexCheck(String sex);
 }

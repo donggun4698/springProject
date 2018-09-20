@@ -1,8 +1,6 @@
 package com.sparkcw.goodteam.dto;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Member {
 	private int code;
@@ -12,16 +10,15 @@ public class Member {
 	private String nickname;
 	private String phone;
 	private String email;
-	private Date birthday;
+	private LocalDate birthday;
 	private String sex;
-	
 	
 	public Member() {
 		super();
 	}
 	
 	public Member(int code, String id, String pw, String name, String nickname, String phone, String email,
-			Date birthday, String sex) {
+			LocalDate birthday, String sex) {
 		super();
 		this.code = code;
 		this.id = id;
@@ -76,10 +73,10 @@ public class Member {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 	public String getSex() {

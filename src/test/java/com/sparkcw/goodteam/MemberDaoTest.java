@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Before;
@@ -39,9 +40,10 @@ public class MemberDaoTest {
 	public void setUp() {
 		try {
 
-			mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", sdf.parse("2020-08-12"), "M");
-			mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", sdf.parse("2020-06-05"), "M");
-			mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", sdf.parse("2020-09-06"), "F");
+			mem1 = new Member(213, "aaa11", "aaaa11", "홍길동", "길동닉", "111-1111-1111", "aaa@na.com", LocalDate.parse("2020-08-10"), "M");
+			mem2 = new Member(12, "bbb22", "bbbb22", "이순신", "순신닉", "111-2222-2222", "bbb@na.com", LocalDate.parse("2020-06-05"), "M");
+			mem3 = new Member(12, "ccc33", "cccc33", "유관순", "관순닉", "111-3333-3333", "ccc@na.com", LocalDate.parse("2020-09-06"), "F");
+		
 		
 		} catch (Exception e) {
 			e.printStackTrace();
