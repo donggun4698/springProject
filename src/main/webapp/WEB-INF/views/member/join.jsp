@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/join.css">
 </head>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/jquery-3.3.1.js"></script>
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4/jquery-ui.css">
-
 <script type="text/javascript">
 $(document).ready(function(){
 	jQuery.fn.serializeObject = function() {
@@ -432,62 +432,65 @@ $(document).ready(function(){
 });
 </script>
 <body>
+	<div style="width: 970px; margin: 0 auto;">
+	<h3>회원가입</h3>
+	<div class="join" style="margin: 0 auto;">
 	<form method="post" id="join-form">
-		<table border="1">
+		<table id="join-table">
 			<tr>
-				<th><label for="id">아이디</label></th>
+				<th><div class="join_title"><label for="id">아이디</label></div></th>
 				<td><input type="text" name="id" id="id" maxlength="20">
 					<p id="idCheckStatus"></p> <input type="hidden" id="idFlag"
 					value="N"></td>
 			</tr>
 			<tr>
-				<th><label for="pw">비밀번호</label></th>
+				<th><div class="join_title"><label for="pw">비밀번호</label></div></th>
 				<td><input type="password" name="pw" id="pw" maxlength="16">
 					<p id="pwCheckStatus"></p> <input type="hidden" id="pwFlag"
 					value="N"></td>
 
 			</tr>
 			<tr>
-				<th><label for="pw2">비밀번호 재확인</label></th>
+				<th><div class="join_title"><label for="pw2">비밀번호 재확인</label></div></th>
 				<td><input type="password" name="pw2" id="pw2" maxlength="16">
 					<p id="pwRecheckStatus"></p> <input type="hidden"
 					id="pwRecheckFlag" value="N"></td>
 			</tr>
 			<tr>
-				<th><label for="name">이름</label></th>
+				<th><div class="join_title"><label for="name">이름</label></div></th>
 				<td><input type="text" name="name" id="name" >
 					<p id="nameCheckStatus"></p> <input type="hidden" id="nameFlag"
 					value="N"></td>
 			</tr>
 			<tr>
-				<th><label for="nickname">닉네임</label></th>
+				<th><div class="join_title"><label for="nickname">닉네임</label></div></th>
 				<td><input type="text" name="nickname" id="nickname"
 					maxlength="10">
 					<p id="nicknameCheckStatus"></p> <input type="hidden"
 					id="nicknameFlag" value="N"></td>
 			</tr>
 			<tr>
-				<th><label for="phone">휴대폰번호</label></th>
+				<th><div class="join_title"><label for="phone">휴대폰번호</label></div></th>
 				<td><input type="text" name="phone" id="phone">
 				<p id="phoneCheckStatus"></p> <input type="hidden"
 					id="phoneFlag" value="N"></td>
 			</tr>
 			<tr>
-				<th><label for="email">이메일주소</label></th>
+				<th><div class="join_title"><label for="email">이메일주소</label></div></th>
 				<td><input type="text" name="email" id="email">
 				<p id="emailCheckStatus"></p>
 				<input type="hidden" id="emailFlag" value="N"></td>
 				
 			</tr>
 			<tr>
-				<th><label for="birthday">생년월일</label></th>
+				<th><div class="join_title"><label for="birthday">생년월일</label></div></th>
 				<td><input type="text" name="birthday" id="birthday" value="">
 				<p id="birthdayCheckStatus"></p>
 				<input type="hidden" id="birthdayFlag" value="N">
 				</td>
 			</tr>
 			<tr>
-				<th><label for="sex">성별</label></th>
+				<th><div class="join_title"><label for="sex">성별</label></div></th>
 				<td><label for="M"><input type="radio" name="sex" id="M" value="M">남자</label> 
 					<label for="F"><input type="radio" name="sex" id="F" value="F">여자</label> </td>
 			</tr>
@@ -503,5 +506,7 @@ $(document).ready(function(){
 		</table>
 		<%-- 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 	</form>
+	</div>
+	</div>
 </body>
 </html>

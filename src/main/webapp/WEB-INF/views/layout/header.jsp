@@ -24,6 +24,15 @@ $(document).ready(function() {
 		});
 	});
 
+	$(".nav li").mouseenter(function() {
+	  	$(this).find(".menu-sub").show();
+		});
+		
+	$(".nav li").mouseleave(function() {
+		  $(this).find(".menu-sub").hide();
+		});
+
+	
 });
 
 
@@ -31,24 +40,36 @@ $(document).ready(function() {
 <body>
 	<div id="header_wrapper">
 		<div id="header"> 
-			<a href="/main"><img
-				src="${pageContext.request.contextPath}/resources/logo.png"
-				alt="logo" class="logo"></a>
-			<ul class="nav1">
-				<li class="gnb1">
-					<p class="gnb1_text">
-						<a href="/club/intro">소개</a>
-					</p>
+			<a href="/main"><img src="${pageContext.request.contextPath}/resources/logo.png" alt="logo" class="logo"></a>
+			<ul class="nav">
+				<li class="gnb_1">
+					<a href="/club/intro">스파크</a>
+					<div class="menu-sub" style="display : none">
+				 <ul>
+              		<li>
+                		<a href="#" >서브1</a>            
+              		</li>
+              		<li>
+                		<a href="#" >서브2</a>               
+              		</li>
+            	 </ul>
+            	 </div>
 				</li>
-				<li class="gnb2">
+				<li class="gnb_2">
 					<p class="gnb2_text">
 						<a href="#" id="test1">경기정보</a>
 					</p>
 				</li>
-				<li class="gnb3">
-					<p class="gnb3_text">
-						<a href="#">기록</a>
-					</p>
+				<li class="gnb_3">
+					<a href="#">기록</a>
+				 <ul class="menu-sub" style="display : none">
+              		<li>
+                		<a href="#" >서브1</a>            
+              		</li>
+              		<li>
+                		<a href="#" >서브2</a>               
+              		</li>
+            	 </ul>
 				</li>
 				<li class="gnb4">
 					<p class="gnb4_text">

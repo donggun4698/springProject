@@ -79,7 +79,6 @@ public class MemberServiceImpl implements MemberService {
 		Map<String, Object> returnValues = new HashMap<String, Object>();
 		try {
 			memberDAO.deleteMember(memberCode);
-			
 			returnValues.put("result", "success");
 		} catch (DataAccessException e) {
 			returnValues.put("result", "fail");

@@ -1,0 +1,16 @@
+table th, table td{
+	vertical-align: top;
+	border-bottom: 1px solid #ddd;
+}
+.join_title {
+	text-align: left;
+	font-size: 15px;
+	margin: 0 10px 0;
+}
+
+#join_table {
+	border: 0;
+}
+
+
+

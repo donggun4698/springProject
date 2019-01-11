@@ -1,0 +1,14 @@
+.contents_wrapper {
+	margin: 0 auto;
+	padding-top: 30px;
+	background-color: lime;
+}
+
+.contents_wrapper #banner{
+	width: 970px;
+	height: 400px;
+	margin: 0 auto;
+	background-color: aqua;
+}
+
+

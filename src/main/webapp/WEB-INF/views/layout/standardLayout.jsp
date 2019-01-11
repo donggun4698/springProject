@@ -11,14 +11,14 @@
 <meta name="viewport" content="initial-scale=1, width=device-width" />
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/normalize.css" />">
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/header.css" />">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/layout.css?ver=2" />">
 </head>
 <body>
 	<div id="wrapper">
 		<tiles:insertAttribute name="header" />
-
+	<div id="main_container">
 		<tiles:insertAttribute name="body" />
-
+	</div>
 		<tiles:insertAttribute name="footer" />
 	</div>
 </body>

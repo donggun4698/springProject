@@ -8,7 +8,7 @@
 <meta name="viewport" content="initial-scale=1, width=device-width" />
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/normalize.css" />">
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/header.css" />">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/layout.css" />">
 </head>
 
 <body>
