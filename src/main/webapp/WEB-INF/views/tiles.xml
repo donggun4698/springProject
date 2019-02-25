@@ -17,5 +17,8 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/join.jsp"/>
 	</definition>
 	
+	<definition name="login" extends="standardLayout">
+		<put-attribute name="body" value="/WEB-INF/views/member/login.jsp"/>
+	</definition>
 
 </tiles-definitions>

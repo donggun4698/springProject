@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -15,6 +16,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.sparkcw.goodteam.dao.MemberDAO;
@@ -22,6 +25,7 @@ import com.sparkcw.goodteam.dto.Member;
 import com.sparkcw.goodteam.exception.InvalidValueException;
 import com.sparkcw.goodteam.exception.ValueBlankException;
 import com.sparkcw.goodteam.exception.ValueDuplicateException;
+import com.sparkcw.goodteam.security.CustomUserDetails;
 import com.sparkcw.goodteam.service.MemberService;
 
 @Service("memberService")
@@ -30,6 +34,14 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberDAO memberDAO;
 
+	@Override
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		Member member =  memberDAO.selectMember()
+	      
+		CustomUserDetails result = new CustomUserDetails(code, id, pw, nickname) 
+	    return result;
+	}
+	
 	@Override
 	public Map<String, Object> getAllMember() {
 		Map<String, Object> returnValues = new HashMap<String, Object>();
@@ -376,4 +388,5 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return returnValues;
 	}
+
 }

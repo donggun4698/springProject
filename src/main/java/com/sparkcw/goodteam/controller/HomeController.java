@@ -47,4 +47,12 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	public String join() {
 		return "join";
 	}
+	
+	/*
+	 * 로그인 페이지로 이동합니다.
+	 */
+	@RequestMapping(value="/member/login")
+	public String login() {
+		return "login";
+	}
 }

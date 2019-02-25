@@ -1,12 +1,13 @@
 package com.sparkcw.goodteam.service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.sparkcw.goodteam.dto.Member;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
 	/*
 	 * 전체멤버를 조회합니다.
