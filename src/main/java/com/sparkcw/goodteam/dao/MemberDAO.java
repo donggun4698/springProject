@@ -6,6 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sparkcw.goodteam.dto.Member;
 
+/**
+ * @author DongGeon
+ *
+ */
+/**
+ * @author DongGeon
+ *
+ */
 public interface MemberDAO {
 	/*
 	 * 멤버를 추가.
@@ -27,15 +35,23 @@ public interface MemberDAO {
 	 */
 	public void updateMember(Member member);
 	
-	/*
-	 * 특정멤버를 조회합니다.
-	 */
-	public List<Member> selectMember(Member member);
-	
+//	/*
+//	 * 특정멤버를 조회합니다.
+//	 */
+//	public List<Member> selectMember(Member member);
+//	
 	/*
 	 * 전체멤버를 조회합니다.
 	 */
 	public List<Member> selectAllMember();
+	
+	
+	/**
+	 * DB에서 입력받은 ID를 가진 계정의 정보를 조회합니다.  
+	 * @param id
+	 * @return
+	 */
+	public Member selectMember(String id);
 	
 	/*
 	 * 입력받은 ID가 DB에 존재하는지 조회합니다.

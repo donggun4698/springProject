@@ -1,44 +1,48 @@
 package com.sparkcw.goodteam.serviceimpl;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.sparkcw.goodteam.dao.MemberDAO;
 import com.sparkcw.goodteam.dto.Member;
 import com.sparkcw.goodteam.exception.InvalidValueException;
 import com.sparkcw.goodteam.exception.ValueBlankException;
 import com.sparkcw.goodteam.exception.ValueDuplicateException;
-import com.sparkcw.goodteam.security.CustomUserDetails;
 import com.sparkcw.goodteam.service.MemberService;
+import com.sparkcw.goodteam.userdetails.CustomUserDetails;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
 
+	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
+	
 	@Autowired
 	MemberDAO memberDAO;
 
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		Member member =  memberDAO.selectMember()
-	      
-		CustomUserDetails result = new CustomUserDetails(code, id, pw, nickname) 
+		Member member = memberDAO.selectMember(id);
+		
+		if(ObjectUtils.isEmpty(member)) {
+			throw new UsernameNotFoundException("User Not Found by ID: "+ id);
+		}
+		
+		
+		CustomUserDetails result = null ;
 	    return result;
 	}
 	
@@ -57,15 +61,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Map<String, Object> getMember(Member member) {
+	public Map<String, Object> getMember(String id) {
 		Map<String, Object> returnValues = new HashMap<String, Object>();
 		try {
-			List<Member> members = memberDAO.selectMember(member);
-			returnValues.put("data", members);
+			Member member = memberDAO.selectMember(id);
+			if(ObjectUtils.isEmpty(member)) {
+				throw new NullPointerException();
+			}
+			returnValues.put("data", member);
 			returnValues.put("result", "success");
 		} catch (DataAccessException e) {
 			returnValues.put("result", "fail");
 			returnValues.put("message", "조회에 실패했습니다.");
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			returnValues.put("result", "fail");
+			returnValues.put("message", "존재하지않는 사용자입니다.");
 			e.printStackTrace();
 		}
 		return returnValues;

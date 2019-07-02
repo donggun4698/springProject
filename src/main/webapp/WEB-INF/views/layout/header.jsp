@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-3.3.1.js"?v=<%=System.currentTimeMillis() %>></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#test1").click(function(){
@@ -61,7 +61,7 @@ $(document).ready(function() {
 					</p>
 				</li>
 				<li class="gnb_3">
-					<a href="#">기록</a>
+					<a href="#" id="test2">기록</a>
 				 <ul class="menu-sub" style="display : none">
               		<li>
                 		<a href="#" >서브1</a>            

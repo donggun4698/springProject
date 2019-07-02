@@ -30,13 +30,16 @@ import com.sparkcw.goodteam.dao.MemberDAO;
 import com.sparkcw.goodteam.dto.Member;
 import com.sparkcw.goodteam.service.MemberService;
 
+import junit.framework.Assert;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/*.xml" })
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml" })
 @Transactional
 public class MemberServiceTest {
 	private static final Logger logger = LoggerFactory.getLogger("MemberService TEST");
 	@Autowired
 	MemberService memberService;
+	
 	Member mem1;
 	Member mem2;
 	Member mem3;
@@ -44,7 +47,7 @@ public class MemberServiceTest {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	
-	@Before
+	
 	public void setUp() {
 	try {
 
@@ -67,21 +70,24 @@ public class MemberServiceTest {
 	}
 
 	
-	public void getMemberTest() {
+	public void idDuplicateTest() {
 		Member testMem = new Member();
 		//testMem.setId("bb22");
 		//testMem.setNickname("길동");
-		Map<String, Object> returnValue =  memberService.getMember(testMem);
+		Map<String, Object> returnValue =  memberService.registerMemberIdDuplicateCheck("bbba22");
+		logger.info(returnValue.get("result").toString());
 		if(returnValue.get("result").equals("success")) {
 			List<Member> newmem =  (List<Member>)returnValue.get("data");
 			logger.info(String.valueOf(newmem.get(1).getName()+" / "+newmem.get(1).getBirthday()));
 		}
 	}
 	
-	
-	public void registerMemberTest() {
-		
-	
+	@Test
+	public void getMemberTest() {
+		Member memT = null;
+		memberService.getMember("bbb22");
+		Map<String, Object> returnValue = memberService.getMember("bbb11");
+		logger.info(returnValue.get("result").toString()+returnValue.get("message").toString());
 	}
 	
 	
@@ -164,7 +170,7 @@ public class MemberServiceTest {
 		System.out.println(returnValue + ": " + result.get("message"));
 	}
 	
-
+	
 	public void emailTest() {
 		String wrongemail = "aaa@ba.c";
 		String email= "aaaa@na.cc";
@@ -190,7 +196,7 @@ public class MemberServiceTest {
 	}
 	
 	
-	@Test
+
 	public void registerTest() {
 		Member member1 = new Member();
 		Map<String, Object> result = new HashMap<String, Object>();

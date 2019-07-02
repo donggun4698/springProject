@@ -17,7 +17,7 @@ public interface MemberService extends UserDetailsService {
 	/*
 	 * 멤버를 조회합니다.
 	 */
-	public Map<String, Object> getMember(Member member);
+	public Map<String, Object> getMember(String id);
 	
 	/*
 	 * 멤버를 등록합니다.

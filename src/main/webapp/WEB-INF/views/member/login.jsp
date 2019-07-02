@@ -32,7 +32,7 @@
 				</td>
 			</tr>
 			
-			<c:if test="${not empty param.fail}">
+			<%-- <c:if test="${not empty param.fail}">
 				<tr>
 				<td colspan="2" align="center">
 					<font color="red">
@@ -42,7 +42,7 @@
 					<c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION" />
 				</td>
 			</tr>
-			</c:if>
+			</c:if>  --%>
 		</table>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" name="loginRedirect" value="${param.loginRedirect}" />

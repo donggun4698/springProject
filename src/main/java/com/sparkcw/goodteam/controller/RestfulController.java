@@ -34,7 +34,7 @@ public class RestfulController {
 	 * Simply selects the home view to render by returning its name.
 	 */ 
 	       
-
+ 
 	@RequestMapping(value = "/club/intro", produces="application/json" ,method = RequestMethod.GET)
 	public Member home1(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);

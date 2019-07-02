@@ -55,25 +55,33 @@
 		#{email} where MEMBER_CODE = #{code}
 	</update>
 
-	<select id="selectMember" resultType="Member" resultMap="Member">
-		select * from member_tb
-		<where>
-			<if test='id != null and id != ""'>
-				MEMBER_ID LIKE CONCAT('%' , #{id} , '%')
-			</if>
-			<if test='nickname != null and nickname != ""'>
-				AND MEMBER_NICKNAME LIKE CONCAT('%' , #{nickname} , '%')
-			</if>
-		</where>
+<!-- 	<select id="selectMember" resultType="Member" resultMap="Member"> -->
+<!-- 		select * from member_tb -->
+<!-- 		<where> -->
+<!-- 			<if test='id != null and id != ""'> -->
+<!-- 				MEMBER_ID LIKE CONCAT('%' , #{id} , '%') -->
+<!-- 			</if> -->
+<!-- 			<if test='nickname != null and nickname != ""'> -->
+<!-- 				AND MEMBER_NICKNAME LIKE CONCAT('%' , #{nickname} , '%') -->
+<!-- 			</if> -->
+<!-- 		</where> -->
+<!-- 	</select> -->
+
+    <select id="selectMember" resultMap="Member" parameterType="String" >
+		select * from MEMBER_TB where MEMBER_ID = #{id}
 	</select>
 
 	<select id="selectAllMember" resultMap="Member">
 		select * from member_tb
 	</select>
 	
-	<select id="selectMemberId" resultType="String">
-		select MEMBER_ID from member_tb where MEMBER_ID = #{id}
+	<select id="selectMemberId" resultType="String" parameterType="String">
+		select MEMBER_ID from MEMBER_TB where MEMBER_ID = #{id}
 	</select>
+	
+	<!-- <select id="selectMemberId" resultType="String">
+		select MEMBER_ID from member_tb where MEMBER_ID = #{id}
+	</select> -->
 	
 	<select id="selectMemberNickname"  resultType="String">
 		select MEMBER_NICKNAME from member_tb where MEMBER_NICKNAME = #{nickname}

@@ -5,10 +5,10 @@
 
 <mapper namespace="com.sparkcw.goodteam.dao.AuthDAO">
 
-	<resultMap type="Auth" id="Auth">
-		<result property="code" column="AUTH_CODE" />
-		<result property="role" column="AUTH_ROLE" />
-	</resultMap>
+<!-- 	<resultMap type="Auth" id="Auth"> -->
+<!-- 		<result property="code" column="AUTH_CODE" /> -->
+<!-- 		<result property="role" column="AUTH_ROLE" /> -->
+<!-- 	</resultMap> -->
 
 	
 </mapper>
