@@ -6,14 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sparkcw.goodteam.dto.Member;
 
-/**
- * @author DongGeon
- *
- */
-/**
- * @author DongGeon
- *
- */
 public interface MemberDAO {
 	/*
 	 * 멤버를 추가.

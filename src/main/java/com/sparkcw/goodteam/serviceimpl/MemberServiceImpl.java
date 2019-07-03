@@ -3,8 +3,10 @@ package com.sparkcw.goodteam.serviceimpl;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ import com.sparkcw.goodteam.dto.Member;
 import com.sparkcw.goodteam.exception.InvalidValueException;
 import com.sparkcw.goodteam.exception.ValueBlankException;
 import com.sparkcw.goodteam.exception.ValueDuplicateException;
+import com.sparkcw.goodteam.service.MemberAuthService;
 import com.sparkcw.goodteam.service.MemberService;
 import com.sparkcw.goodteam.userdetails.CustomUserDetails;
 
@@ -32,7 +36,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	MemberDAO memberDAO;
-
+	@Autowired
+	MemberAuthService memberAuthService;
+	
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		Member member = memberDAO.selectMember(id);
@@ -41,8 +47,16 @@ public class MemberServiceImpl implements MemberService {
 			throw new UsernameNotFoundException("User Not Found by ID: "+ id);
 		}
 		
+		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
 		
-		CustomUserDetails result = null ;
+		if(authSet.size() == 0) {
+			throw new UsernameNotFoundException("No Authority");
+		}
+		
+		authSet.addAll(memberAuthService.getUserAuthorities(member.getCode()));
+		
+		CustomUserDetails result = new CustomUserDetails(
+							member.getCode(), member.getName(), member.getId(), member.getPw(), member.getNickname(), authSet) ;
 	    return result;
 	}
 	

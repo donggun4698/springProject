@@ -75,7 +75,7 @@ public class MemberDaoTest {
 	@Test
 	public void selectMember() {
 		Member newmem = memberDAO.selectMember("aaa11");
-		logger.info(newmem.getName()+"\t"+newmem.getNickname());
+		logger.info(newmem.getName()+"\t"+newmem.getNickname()+newmem.getCode());
 	}
 	
 	
