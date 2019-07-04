@@ -2,34 +2,35 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 <security:http pattern="/resources/**" security="none" />
 
 <security:http auto-config="true" use-expressions="true" >
  
 <!--  <security:intercept-url pattern="/**/intro" access="hasRole('ROLE_USER')" /> -->
+ <security:intercept-url pattern="/test2" access="hasRole('ROLE_ADMIN')" />
  <security:intercept-url pattern="/**" access="permitAll" />
+ <security:csrf disabled="true"/>
  
- <security:form-login login-page="/member/login" username-parameter="id" password-parameter="pw"/> 
+ <security:form-login 
+ 	login-page="/member/login"
+ 	login-processing-url="/securityLogin"
+ 	username-parameter="id" 
+ 	password-parameter="pw"
+ 	default-target-url="/main"
+ 	/> 	
  
 </security:http>
 
 <security:authentication-manager>
-
-	<security:authentication-provider>
-
-		<security:user-service>
-
-			<security:user authorities="ROLE_USER" name="aa11" password="1" />
-
-		</security:user-service>
-
-
+	<security:authentication-provider user-service-ref="memberService">
+		
 	</security:authentication-provider>
-
 </security:authentication-manager>
 
-
+	<bean id="memberService" class="com.sparkcw.goodteam.serviceimpl.MemberServiceImpl"></bean>
 </beans>

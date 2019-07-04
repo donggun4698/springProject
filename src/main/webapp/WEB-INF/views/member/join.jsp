@@ -219,6 +219,7 @@ $(document).ready(function(){
 		$("#pwFlag").val("N");
 		$("#pwRecheckFlag").val("N");
 		pwCheck();
+		pwRecheck();
 	});
 	
 	function pwRecheck(){

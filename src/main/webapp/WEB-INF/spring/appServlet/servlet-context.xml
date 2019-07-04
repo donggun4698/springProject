@@ -35,7 +35,9 @@
 		</beans:property>
 	</beans:bean> 
 	
-	<context:component-scan base-package="com.sparkcw.goodteam" />
+	<context:component-scan base-package="com.sparkcw.goodteam" >
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	
 	

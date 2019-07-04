@@ -49,14 +49,15 @@ public class MemberServiceImpl implements MemberService {
 		
 		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
 		
+		authSet.addAll(memberAuthService.getUserAuthorities(member.getCode()));
+		
 		if(authSet.size() == 0) {
 			throw new UsernameNotFoundException("No Authority");
 		}
 		
-		authSet.addAll(memberAuthService.getUserAuthorities(member.getCode()));
-		
 		CustomUserDetails result = new CustomUserDetails(
 							member.getCode(), member.getName(), member.getId(), member.getPw(), member.getNickname(), authSet) ;
+		
 	    return result;
 	}
 	

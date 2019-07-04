@@ -5,11 +5,39 @@
 
 <mapper namespace="com.sparkcw.goodteam.dao.AuthDAO">
 
-<!-- 	<resultMap type="Auth" id="Auth"> -->
-<!-- 		<result property="code" column="AUTH_CODE" /> -->
-<!-- 		<result property="role" column="AUTH_ROLE" /> -->
-<!-- 	</resultMap> -->
+	<resultMap type="Auth" id="Auth">
+		<result property="code" column="AUTH_CODE" />
+		<result property="role" column="AUTH_ROLE" />
+	</resultMap>
 
+	<select id="selectAuth" resultMap="Auth">
+		SELECT * FROM AUTH_TB
+	</select>
+	
+	<insert id="insertAuth" parameterType="Auth">
+		INSERT INTO AUTH_TB(AUTH_CODE, AUTH_ROLE)
+		VALUES
+				( #{code}, #{role} )
+	</insert>
+
+	<update id="updateAuth" parameterType="Auth">
+		UPDATE AUTH_TB
+		<set>
+			<if test="role != null and !''.equals(role)">
+				AUTH_ROLE = #{role}
+			</if>
+		</set>
+		WHERE
+				AUTH_CODE = #{code}
+		
+	</update>
+	
+	<delete id="deleteAuth" parameterType="int">
+		DELETE FROM
+				AUTH_TB
+		WHERE
+				AUTH_CODE = #{code}
+	</delete>
 	
 </mapper>
     

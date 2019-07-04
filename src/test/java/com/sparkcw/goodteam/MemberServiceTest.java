@@ -69,20 +69,20 @@ public class MemberServiceTest {
 		memberService.registerMember(mem3);
 	}
 
-	
+	@Test
 	public void idDuplicateTest() {
 		Member testMem = new Member();
 		//testMem.setId("bb22");
 		//testMem.setNickname("길동");
-		Map<String, Object> returnValue =  memberService.registerMemberIdDuplicateCheck("bbba22");
+		Map<String, Object> returnValue =  memberService.registerMemberIdDuplicateCheck("ddd44");
 		logger.info(returnValue.get("result").toString());
 		if(returnValue.get("result").equals("success")) {
 			List<Member> newmem =  (List<Member>)returnValue.get("data");
-			logger.info(String.valueOf(newmem.get(1).getName()+" / "+newmem.get(1).getBirthday()));
+			logger.info(returnValue.get("message").toString());
 		}
 	}
 	
-	@Test
+	
 	public void getMemberTest() {
 		Member memT = null;
 		memberService.getMember("bbb22");

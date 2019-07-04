@@ -13,5 +13,6 @@ public interface MemberAuthDAO {
 	 */
 	public List<Auth> selectMemberAuthByMemCode(int memCode);
 	
+	
 
 }

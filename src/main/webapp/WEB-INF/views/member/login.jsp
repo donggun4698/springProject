@@ -11,7 +11,7 @@
 <body>
 	<h1>로그인</h1>
 	
-	<form method="post" action="j_spring_security_check">
+	<form method="post" action='<c:url value="/securityLogin"/>'>
 		<table border="0" width="400px" cellspacing="0" cellpadding="0"
 			class="joinData">
 			<tr>
@@ -20,7 +20,7 @@
 			</tr>
 			<tr>
 				<th><label for="pass">비밀번호</label></th>
-				<td><input type="password" name="password" >
+				<td><input type="password" name="pw" >
 			</tr>
 		
 			<tr>
@@ -32,7 +32,7 @@
 				</td>
 			</tr>
 			
-			<%-- <c:if test="${not empty param.fail}">
+			 <c:if test="${not empty param.fail}">
 				<tr>
 				<td colspan="2" align="center">
 					<font color="red">
@@ -42,7 +42,7 @@
 					<c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION" />
 				</td>
 			</tr>
-			</c:if>  --%>
+			</c:if> 
 		</table>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" name="loginRedirect" value="${param.loginRedirect}" />

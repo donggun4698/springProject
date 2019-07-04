@@ -83,7 +83,7 @@
 		select MEMBER_ID from member_tb where MEMBER_ID = #{id}
 	</select> -->
 	
-	<select id="selectMemberNickname"  resultType="String">
+	<select id="selectMemberNickname"  resultType="String" parameterType="String">
 		select MEMBER_NICKNAME from member_tb where MEMBER_NICKNAME = #{nickname}
 	</select>
 </mapper>
