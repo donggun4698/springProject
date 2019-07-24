@@ -64,7 +64,7 @@ $(document).ready(function() {
 					<a href="/test2" id="test2">기록</a>
 				 <ul class="menu-sub" style="display : none">
               		<li>
-                		<a href="#" >서브1</a>            
+                		<a href="" >서브1</a>            
               		</li>
               		<li>
                 		<a href="#" >서브2</a>               
@@ -73,7 +73,7 @@ $(document).ready(function() {
 				</li>
 				<li class="gnb4">
 					<p class="gnb4_text">
-						<a href="#">선수단</a>
+						<a href="/test3">선수단</a>
 					</p>
 				</li>
 				<li class="gnb5">

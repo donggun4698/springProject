@@ -18,10 +18,11 @@
  
  <security:form-login 
  	login-page="/member/login"
- 	login-processing-url="/securityLogin"
+ 	login-processing-url="/member/login"
  	username-parameter="id" 
  	password-parameter="pw"
- 	default-target-url="/main"
+ 	authentication-failure-handler-ref="customAuthenticationFailureHandler"
+ 	authentication-success-handler-ref="customAuthenticationSuccessHandler"
  	/> 	
  
 </security:http>
@@ -33,4 +34,17 @@
 </security:authentication-manager>
 
 	<bean id="memberService" class="com.sparkcw.goodteam.serviceimpl.MemberServiceImpl"></bean>
+	
+	<bean id="customAuthenticationFailureHandler" class="com.sparkcw.goodteam.security.CustomAuthenticationFailureHandler">
+		<property name="formId" value="id"></property>
+		<property name="failMessage" value="failMessage"></property>
+		<property name="defaultUrl" value="/member/login"></property>
+		<property name="loginRedirect" value="loginRedirect"></property>
+	</bean>
+	
+	<bean id="customAuthenticationSuccessHandler" class="com.sparkcw.goodteam.security.CustomAuthenticationSuccessHandler">
+		<property name="loginRedirect" value="loginRedirect"></property>
+		<property name="defaultUrl" value="/main"></property>
+	</bean>
+		
 </beans>

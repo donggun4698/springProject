@@ -24,4 +24,8 @@
 	<definition name="test2" extends="standardLayout">
 		<put-attribute name="body" value="/WEB-INF/views/test2.jsp"/>
 	</definition>
+	
+	<definition name="test3" extends="standardLayout">
+		<put-attribute name="body" value="/WEB-INF/views/test2.jsp"/>
+	</definition>
 </tiles-definitions>

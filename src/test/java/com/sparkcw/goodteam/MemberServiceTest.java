@@ -1,36 +1,25 @@
 package com.sparkcw.goodteam;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sparkcw.goodteam.dao.MemberDAO;
 import com.sparkcw.goodteam.dto.Member;
 import com.sparkcw.goodteam.service.MemberService;
-
-import junit.framework.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml" })
@@ -69,7 +58,7 @@ public class MemberServiceTest {
 		memberService.registerMember(mem3);
 	}
 
-	@Test
+	
 	public void idDuplicateTest() {
 		Member testMem = new Member();
 		//testMem.setId("bb22");
@@ -227,4 +216,18 @@ public class MemberServiceTest {
 			}
 		}
 	}
+	
+	@Test
+	public void logintest() {
+		try {
+			memberService.loadUserByUsername("aa11");
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			
+		}
+		
+	}
+	
 }

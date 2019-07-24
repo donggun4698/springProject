@@ -11,7 +11,7 @@
 <body>
 	<h1>로그인</h1>
 	
-	<form method="post" action='<c:url value="/securityLogin"/>'>
+	<form method="post" action='<c:url value="/member/login"/>'>
 		<table border="0" width="400px" cellspacing="0" cellpadding="0"
 			class="joinData">
 			<tr>
@@ -32,12 +32,12 @@
 				</td>
 			</tr>
 			
-			 <c:if test="${not empty param.fail}">
+			 <c:if test="${not empty failMessage}">
 				<tr>
 				<td colspan="2" align="center">
 					<font color="red">
 						<p>not successful, try again</p>
-						reason: ${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
+						reason: ${failMessage}
 					</font>
 					<c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION" />
 				</td>
@@ -45,7 +45,7 @@
 			</c:if> 
 		</table>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		<input type="hidden" name="loginRedirect" value="${param.loginRedirect}" />
+		<input type="hidden" name="loginRedirect" value="${loginRedirect}" />
 		</form>
 </body>
 </html>
